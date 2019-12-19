@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>链上数据浏览器</title>
+    <!--favicon-->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!--Treeview-->
+    <link href="assets/plugins/bootstrap-treeview/css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href="assets/css/animate.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
+    <!-- Icons CSS-->
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <!-- Custom Style-->
+    <link href="assets/css/app-style.css" rel="stylesheet"/>
+</head>
+
+<body style="background:url(1.jpg);width: 50%;margin-left: 25%;background-size: 100%">
+<!-- Start wrapper-->
+<div id="wrapper">
+    <div class="card mx-auto my-5" style="opacity: 0.90">
+        <div class="card-body row">
+            <div class="col-6">
+                <div class="card-content p-2">
+                    <div class="card-title text-uppercase text-center py-2">链上数据浏览注册</div>
+                    <div>
+                        <div class="form-group">
+                            <label for="exampleInputName" class="">用户名</label>
+                            <div class="position-relative has-icon-right"/>
+                                <input type="text" id="exampleInputName" autocomplete="off"
+                                       class="form-control input-shadow" placeholder="请输入用户名" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+                                <div class="form-control-position">
+                                    <i class="icon-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword" class="">密码</label>
+                            <div class="position-relative has-icon-right">
+                                <input type="text" id="exampleInputPassword" autocomplete="off"
+                                       class="form-control input-shadow" placeholder="请输入密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+                                <div class="form-control-position">
+                                    <i class="icon-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 card p-2">
+                <div class="card-title text-primary text-center" style="padding-top: 0.5rem">选择申请网络</div>
+                <div id="select_window"></div>
+            </div>
+
+            <!-- <div class="form-group">
+                        <div class="icheck-material-primary">
+                            <input type="checkbox" id="user-checkbox" checked="" />
+                            <label for="user-checkbox">我同意条款</label>
+                        </div>
+                    </div> -->
+
+            <br>
+            <button id="reg" type="button"
+                    class="btn btn-primary shadow-primary btn-block waves-effect waves-light">注册
+            </button>
+            <!-- <div class="text-center mt-3">Sign Up With</div>
+
+     <div class="form-row mt-4">
+      <div class="form-group mb-0 col-6">
+       <button type="button" class="btn btn-facebook shadow-facebook btn-block text-white"><i class="fa fa-facebook-square"></i> Facebook</button>
+     </div>
+     <div class="form-group mb-0 col-6 text-right">
+      <button type="button" class="btn btn-twitter shadow-twitter btn-block text-white"><i class="fa fa-twitter-square"></i> Twitter</button>
+     </div>
+    </div> -->
+
+            <!-- <div class="card-footer text-center py-3">
+    <p class="text-muted mb-0">Already have an account? <a href="authentication-signin.html"> Sign In here</a></p>
+  </div> -->
+
+
+            <!--Start Back To Top Button-->
+            <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+            <!--End Back To Top Button-->
+        </div>
+        <div class="card-footer text-center py-3">
+            <p class="text-muted mb-0">已拥有帐号？<a href="login.html"> 点此登录</a></p>
+        </div>
+        <!--wrapper-->
+    </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="assets/plugins/jquery.min.js"></script>
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap.min.js"></script>
+<script src="assets/plugins/sidebar-menu.js"></script>
+<script src="assets/plugins/app-script.js"></script>
+<script src="assets/plugins/jquery.base64.js"></script>
+<script src="assets/plugins/jquery.md5.js"></script>
+<!-- simplebar js -->
+<script src="assets/plugins/simplebar/js/simplebar.js"></script>
+<!-- waves effect js -->
+<script src="assets/plugins/waves.js"></script>
+<script src="assets/js/reg.js"></script>
+
+<!--Sweet Alerts -->
+<script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+<script src="assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
+</body>
+
+</html>

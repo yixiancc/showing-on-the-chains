@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>链上数据浏览器</title>
+    <!--favicon-->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Bootstrap core CSS-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href="assets/css/animate.css" rel="stylesheet" type="text/css"/>
+    <!-- Icons CSS-->
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <!-- Custom Style-->
+    <link href="assets/css/app-style.css" rel="stylesheet"/>
+</head>
+
+<body style ="background:url(1.jpg);width: 50%;margin-left: 25%;background-size: 100%">
+<!-- Start wrapper-->
+<div id="wrapper">
+    <div class="card card-authentication1 mx-auto my-5" style="opacity: 0.94">
+        <div class="card-body">
+            <div class="card-content p-2">
+                <div class="card-title text-uppercase text-center py-3">链上数据浏览登录</div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername" class="">用户名</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="text" id="exampleInputUsername"
+                                   class="form-control input-shadow" placeholder="请输入用户名"  onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+                            <div class="form-control-position">
+                                <i class="icon-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword" class="">密码</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="password" id="exampleInputPassword"
+                                   class="form-control input-shadow" placeholder="请输入密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+                            <div class="form-control-position">
+                                <i class="icon-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <!-- <div class="form-group col-6 text-right">
+          <a href="authentication-reset-password.html">Reset Password</a>
+         </div> -->
+                    </div>
+                    <button id="login" type="submit"
+                            class="btn btn-primary shadow-primary btn-block waves-effect waves-light">登录
+                    </button>
+                    <!-- <div class="text-center mt-3">Sign In With</div> -->
+
+                    <!-- <div class="form-row mt-4">
+          <div class="form-group mb-0 col-6">
+           <button type="button" class="btn btn-facebook shadow-facebook btn-block text-white"><i class="fa fa-facebook-square"></i> Facebook</button>
+         </div>
+         <div class="form-group mb-0 col-6 text-right">
+          <button type="button" class="btn btn-twitter shadow-twitter btn-block text-white"><i class="fa fa-twitter-square"></i> Twitter</button>
+         </div>
+        </div> -->
+            </div>
+        </div>
+        <div class="card-footer text-center py-3">
+            <p class="text-muted mb-0">还没有帐号？<a href="reg.html"> 点此注册</a></p>
+        </div>
+    </div>
+
+    <!--Start Back To Top Button-->
+    <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+</div>
+<!--wrapper-->
+
+<!-- Bootstrap core JavaScript-->
+<script src="assets/plugins/jquery.min.js"></script>
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap.min.js"></script>
+<script src="assets/plugins/jquery.base64.js"></script>
+<script src="assets/plugins/jquery.md5.js"></script>
+<!--Sweet Alerts -->
+<script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+<script src="assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
+<script src="assets/js/login.js"></script>
+
+</body>
+
+</html>

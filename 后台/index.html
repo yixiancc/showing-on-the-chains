@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>链上数据浏览器后台</title>
+    <!--favicon-->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- simplebar CSS-->
+    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <!-- Bootstrap core CSS-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--Treeview-->
+    <link href="assets/plugins/bootstrap-treeview/css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
+    <!-- animate CSS-->
+    <link href="assets/css/animate.css" rel="stylesheet" type="text/css" />
+    <!-- Icons CSS-->
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <!-- Sidebar CSS-->
+    <link href="assets/css/sidebar-menu.css" rel="stylesheet" />
+    <!-- Custom Style-->
+    <link href="assets/css/app-style.css" rel="stylesheet" />
+</head>
+
+<style>
+    .dataTables_wrapper {
+        padding: 0px
+    }
+
+    .ace-tm .ace_string {
+        color: rgb(0, 0, 0)
+    }
+</style>
+
+<body>
+    <!-- Start wrapper-->
+    <div id="wrapper">
+        <!--Start sidebar-wrapper-->
+        <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true" class="nav nav-pills nav-stacked">
+            <div class="brand-logo">
+                <a href="#">
+                    <h5 class="logo-text">链上数据浏览器后台</h5>
+                </a>
+            </div>
+            <ul class="sidebar-menu do-nicescrol">
+                <li>
+                    <a href="" class="waves-effect">
+                        <span>网络配置管理</span>
+                        <i class="fa fa-angle-left float-right"></i>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a class="c1s1" href="#" id="new"><i class="zmdi"></i>输入新网络配置</a></li>
+                        <li><a class="c1s1" href="#" id="all"><i class="zmdi"></i>查看配置</a></li>
+                        <li><a class="c1s1" href="#" id="network"><i class="zmdi"></i>查看网络信息</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="" class="waves-effect">
+                        <span>用户管理</span>
+                        <i class="fa fa-angle-left float-right"></i>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a class="c1s1" href="#" id="apply"><i class="zmdi"></i>审批用户注册申请</a></li>
+                        <li><a class="c1s1" href="#" id="newapply"><i class="zmdi"></i>审批用户新权限申请</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!--End sidebar-wrapper-->
+
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+            <nav class="navbar navbar-expand fixed-top bg-white">
+                <ul class="navbar-nav mr-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link toggle-menu" href="javascript:void();">
+                            <i class="icon-menu menu-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav align-items-center right-nav-link">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary waves-effect waves-light btn-sm m-1 smart_contract1" href=" "
+                            id="out">
+                            <span class="user-profile" style="font-size: 13px">登出</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <!--End topbar header-->
+
+        <div class="clearfix"></div>
+
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row" id="newsettings">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="personal-info" novalidate="novalidate">
+                                    <div class="card-title text-primary">请填写新配置</div>
+                                    <hr>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">networkName</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="networkName"
+                                                placeholder="请填写networkName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">clientAlias</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="clientAlias"
+                                                placeholder="请填写clientAlias">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">orgMSPID</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="orgMSPID"
+                                                placeholder="请填写orgMSPID">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">clientWorkAbsDir</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="clientWorkAbsDir"
+                                                placeholder="请填写clientWorkAbsDir(绝对路径)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">mspConfigRelPath</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="mspConfigRelPath"
+                                                placeholder="请填写mspConfigRelPath(相对路径)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">ordererLocation</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="ordererLocation"
+                                                placeholder="请填写ordererLocation">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">peerLocation</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="peerLocation"
+                                                placeholder="请填写peerLocation">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">openTLSByDefault</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="openTLSByDefault"
+                                                placeholder="请填写openTLSByDefault">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">tlsCertFile</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="tlsCertFile"
+                                                placeholder="请填写tlsCertFile(相对路径)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">tlsKeyFile</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="tlsKeyFile"
+                                                placeholder="请填写tlsKeyFile(相对路径)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="input-1" class="col-sm-2 col-form-label">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">tlsRootCertFile</font>
+                                            </font>
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="tlsRootCertFile"
+                                                placeholder="请填写tlsRootCertFile(相对路径)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-sm shadow-primary px-5"
+                                            id="newsetting_submit">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <!-- 结束填写新配置 -->
+                <!-- 查看配置 -->
+                <div id="allsettings" class="row">
+                </div>
+                <!-- 修改配置model -->
+                <div id="edit_model">
+                </div>
+                <!-- 结束查看配置 -->
+                <!-- 查看网络信息 -->
+                <div id="allnetwork" class="row">
+                </div>
+                <!-- 结束查看网络信息 -->
+                <!-- 查看用户申请 -->
+                <div id="allapply" class="row">
+                </div>
+                <div id="allnewapply" class="row">
+                </div>
+                <!-- 结束查看用户申请 -->
+                <div class="modal fade" id="reason_model">
+                <div class="modal-dialog modal-sm">
+                <div class="modal-content" style="width:250%;margin-left:-75%">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>拒绝原因</label>
+                                    <input type="text" class="form-control" placeholder="请填写拒绝原因">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><i
+                        class="fa fa-check-square-o" onclick="swal('拒绝成功！', 'success');"></i>拒绝</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            <!-- End container-fluid-->
+        </div>
+
+
+
+        <!--Start Back To Top Button-->
+        <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="assets/plugins/jquery.min.js"></script>
+    <script src="assets/plugins/jquery.base64.js"></script>
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap.min.js"></script>
+
+    <!-- simplebar js -->
+    <script src="assets/plugins/simplebar/js/simplebar.js"></script>
+    <!-- waves effect js -->
+    <script src="assets/plugins/waves.js"></script>
+    <!-- sidebar-menu js -->
+    <script src="assets/plugins/sidebar-menu.js"></script>
+
+    <!-- Custom scripts -->
+    <script src="assets/plugins/app-script.js"></script>
+    <!--Treeview-->
+    <script src="assets/plugins/bootstrap-treeview/js/bootstrap-treeview.min.js"></script>
+    <script src="assets/plugins/bootstrap-treeview/js/treeview-custom-script.js"></script>
+
+    <!--Sweet Alerts -->
+    <script src="assets/js/index.js"></script>
+    <script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+
+    <script>
+        function del(value) {
+            delsettings(value)
+        }
+
+        function getpassid(value) {
+            passapply(value)
+        }
+
+        function getnewpassid(value) {
+            passnewapply(value)
+        }
+        function refusepassid(value) {
+            refuseapply(value)
+        }
+        function refusenewpassid(value) {
+            refuseapply(value)
+        }
+    </script>
+
+</body>
+
+</html>
+
+<!-- 填写新配置 -->
+<!-- <div id="newsettings">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title text-primary">请填写新配置</div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>networkName</label>
+                                    <input type="text" class="form-control" id="networkName"
+                                        placeholder="请填写networkName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-2">clientAlias</label>
+                                    <input type="text" class="form-control" id="clientAlias"
+                                        placeholder="请填写clientAlias">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">orgMSPID</label>
+                                    <input type="text" class="form-control" id="orgMSPID" placeholder="请填写orgMSPID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-4">clientWorkAbsDir</label>
+                                    <input type="text" class="form-control" id="clientWorkAbsDir"
+                                        placeholder="请填写clientWorkAbsDir">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-5">mspConfigRelPath</label>
+                                    <input type="text" class="form-control" id="mspConfigRelPath"
+                                        placeholder="请填写mspConfigRelPath">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>ordererAlias</label>
+                                    <input type="text" class="form-control" id="ordererAlias"
+                                        placeholder="请填写ordererAlias">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-2">ordererLocation</label>
+                                    <input type="text" class="form-control" id="ordererLocation"
+                                        placeholder="请填写ordererLocation">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">peerAlias</label>
+                                    <input type="text" class="form-control" id="peerAlias" placeholder="请填写peerAlias">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-4">peerLocation</label>
+                                    <input type="text" class="form-control" id="peerLocation"
+                                        placeholder="请填写peerLocation">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-5">openTLSByDefault</label>
+                                    <input type="text" class="form-control" id="openTLSByDefault"
+                                        placeholder="请填写openTLSByDefault">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>tlsCertFile</label>
+                                    <input type="text" class="form-control" id="tlsCertFile"
+                                        placeholder="请填写tlsCertFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-2">tlsKeyFile</label>
+                                    <input type="text" class="form-control" id="tlsKeyFile" placeholder="请填写tlsKeyFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">tlsRootCertFile</label>
+                                    <input type="text" class="form-control" id="tlsRootCertFile"
+                                        placeholder="请填写tlsRootCertFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-4">caFile</label>
+                                    <input type="text" class="form-control" id="caFile" placeholder="请填写caFile">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-5">goPath</label>
+                                    <input type="text" class="form-control" id="goPath" placeholder="请填写goPath">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-sm shadow-primary px-5"
+                                        id="newsetting_submit">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->

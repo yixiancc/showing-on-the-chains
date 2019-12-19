@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>链上数据浏览</title>
+    <!--favicon-->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- simplebar CSS-->
+    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+    <!--Treeview-->
+    <link href="assets/plugins/bootstrap-treeview/css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href="assets/css/animate.css" rel="stylesheet" type="text/css"/>
+    <!-- Icons CSS-->
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <!-- Sidebar CSS-->
+    <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
+    <!-- Custom Style-->
+    <link href="assets/css/app-style.css" rel="stylesheet"/>
+</head>
+
+<style>
+    .dataTables_wrapper {
+        padding: 0px
+    }
+
+    .ace-tm .ace_string {
+        color: rgb(0, 0, 0)
+    }
+</style>
+
+<body>
+<!-- Start wrapper-->
+<div id="wrapper">
+    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true" class="nav nav-pills nav-stacked">
+        <div class="brand-logo">
+            <a href="#">
+                <h5 class="logo-text">链上数据浏览</h5>
+            </a>
+        </div>
+    </div>
+
+    <!--Start topbar header-->
+    <header class="topbar-nav">
+        <nav class="navbar navbar-expand fixed-top bg-white">
+            <ul class="navbar-nav mr-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link toggle-menu" href="#">
+                        <i class="icon-menu menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <div>
+                        <ul class="nav nav-pills contract_nav" style="padding:0.25rem">
+                            <li role="presentation" id="instantisted_head">
+                            </li>
+                            <li role="presentation">
+                                <button type="button" id="query_window_show" class="btn btn-outline
+                                        waves-effect waves-light btn-sm m-1 smart_contract1">点击进行query代码查询
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav align-items-center right-nav-link">
+                <li class="nav-item dropdown-lg">
+                    <a class="btn btn-primary" data-toggle="dropdown"
+                       href="javascript:void();">
+                        用户管理</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="#" id="newapply"
+                                   data-toggle="modal" data-target="#applymodal">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h6 class="mt-0 msg-title">新权限申请</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#" id="applying"
+                                   data-toggle="modal" data-target="#applyingmodal">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h6 class="mt-0 msg-title">权限申请进度</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#" id="out">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h6 class="mt-0 msg-title">登出</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!--End topbar header-->
+
+    <div class="clearfix"></div>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div id="all">
+                <div id="query_window">
+                    <div style="margin-left:-1.0rem">
+                        <div id="query_text">
+                            <h5>Query</h5>
+                            <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                            <pre id="code" class="ace_editor" style="height:180px;width: 520px"><textarea
+                                    class="ace_text-input"
+                                    id="query_textarea">
+{
+    "selector": {
+        "...":{
+            "$gt":""
+        }
+    }
+}</textarea></pre>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:0px">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-9" style="margin-top:-4%">
+                            <button type="button" id="query"
+                                    class="btn btn-primary waves-effect btn-sm waves-light m-1">提交查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 元数据浏览div -->
+                <div id="metadata" style="margin-top:0%">
+                    <!-- End Breadcrumb-->
+                    <!-- 表格模式 -->
+                    <div class="row" id="table_table">
+                        <div class="col-lg-12 row">
+                            <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" style="padding-left: 0%">
+                                <div class="text-left" style="margin-top:0%">
+                                    <p style="font-size: 16px;margin-bottom: 0rem">选择每页展示数量:</p>
+                                    <form role="form">
+                                        <div class="form-group" style="margin-left: 0px">
+                                            <select id="table_page" class="form-control"
+                                                    style="width: 20%;height: 33px" onchange="use_changetable_page()">
+                                                <option value="15">15</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12"
+                                 style="padding-left: 0%;margin-left: -30%;margin-top:1%">
+                                <button type="button"
+                                        class="btn btn-primary waves-effect btn-sm waves-light m-1"
+                                        id="table_table_button">TABLE
+                                </button>
+                                <button type="button"
+                                        class="btn btn-primary waves-effect btn-sm waves-light m-1"
+                                        id="table_json_button">JSON
+                                </button>
+                            </div>
+                            <div class="card" style="margin-top:-0.6%">
+                                <div class="card-body" style="padding: 0px">
+                                    <div class="table-responsive" style="padding-left: 0px; padding-right:0px">
+                                        <table class="table table-bordered" style="font-size: 14px">
+                                            <thead id="table_thead">
+                                            </thead>
+                                            <tbody id="table_tbody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row" style="margin-left:29%">
+                                        <div class="col-lg-9"></div>
+                                        <div class="col-lg-3">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="table_page_first">首页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="table_page_up">上一页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="table_page_next">下一页
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Row-->
+
+                    <!-- json模式 -->
+                    <div class="row" id="json_json">
+                        <div class="col-lg-12" style="padding:0px">
+                            <div class="card">
+                                <div class="card-body" style="padding: 0px">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" style="padding-left: 0.9%">
+                                            <div class="text-left" style="margin-top:1%">
+                                                <p style="font-size: 16px;margin-bottom: 0rem">选择每页展示数量:</p>
+                                                <form role="form">
+                                                    <div class="form-group" style="margin-left: 0px">
+                                                        <select id="json_page" class="form-control"
+                                                                style="width: 20%;height: 33px;"
+                                                                onchange="use_changejson_page()">
+                                                            <option value="15">15</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12"
+                                             style="padding-left: 0%;margin-left: -30%;margin-top:1%">
+                                            <button type="button"
+                                                    class="btn btn-primary waves-effect btn-sm waves-light m-1"
+                                                    id="json_table_button">TABLE
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary waves-effect btn-sm waves-light m-1"
+                                                    id="json_json_button">JSON
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="append_json" style="margin-left:0rem">
+                                    </div>
+
+                                    <div class="row" style="margin-left:29%">
+                                        <div class="col-lg-9"></div>
+                                        <div class="col-lg-3">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="json_page_first">首页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="json_page_up">上一页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="json_page_next">下一页
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- query数据浏览div -->
+                <div id="querydata">
+                    <div class="row" style="padding-top: 0px">
+                        <div class="col-sm-9" style="padding: 0px 0px">
+                            <ol class="breadcrumb" style="margin-bottom: 0.5rem">
+                                <li class="breadcrumb-item" style="margin-top: 1.1%">
+                                    <h5 class="c1">query结果展示</h5>
+                                </li>
+                                <br>
+                                <li class="breadcrumb-item" style="margin-left: 2%">
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                            id="query_table_button">TABLE
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                            id="query_json_button">JSON
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                            id="metadata_button">返回元数据浏览
+                                    </button>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- End Breadcrumb-->
+                    <!-- 表格模式 -->
+                    <div class="row" id="query_table_table">
+                        <div class="col-lg-12" style="padding:0px">
+                            <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" style="padding-left: 0%">
+                                <div class="text-left" style="margin-top:0px">
+                                    <p style="font-size: 16px;margin-bottom: 0rem">选择每页展示数量:</p>
+                                    <form role="form">
+                                        <div class="form-group" style="margin-left: 0px">
+                                            <select id="query_table_page" class="form-control"
+                                                    style="width: 20%;height: 33px;"
+                                                    onchange="use_changequery_table_page()">
+                                                <option value="15">15</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body" style="padding: 0px">
+                                    <div class="table-responsive" style="padding-left: 0px; padding-right:0px">
+                                        <table class="table table-bordered" style="font-size: 14px">
+                                            <thead id="query_table_thead">
+                                            </thead>
+                                            <tbody id="query_table_tbody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row" style="margin-left:29%">
+                                        <div class="col-lg-9"></div>
+                                        <div class="col-lg-3">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_table_page_first">首页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_table_page_up">上一页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_table_page_next">下一页
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Row-->
+
+                    <!-- json模式 -->
+                    <div class="row" id="query_json_json">
+                        <div class="col-lg-12" style="padding:0px">
+                            <div class="card">
+                                <div class="card-body" style="padding: 0px">
+                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" style="padding-left: 0%">
+                                        <div class="text-left" style="margin-top:0px">
+                                            <p style="font-size: 16px;margin-bottom: 0rem">选择每页展示数量:</p>
+                                            <form role="form">
+                                                <div class="form-group" style="margin-left: 0px">
+                                                    <select id="query_json_page" class="form-control"
+                                                            style="width: 20%;height: 33px;"
+                                                            onchange="use_changequery_json_page()">
+                                                        <option value="15">15</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="query_append_json" style="margin-left:0rem">
+                                    </div>
+
+                                    <div class="row" style="margin-left:29%">
+                                        <div class="col-lg-9"></div>
+                                        <div class="col-lg-3">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_json_page_first">首页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_json_page_up">上一页
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm waves-effect waves-light m-1"
+                                                    id="query_json_page_next">下一页
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End container-fluid-->
+        </div>
+    </div>
+
+    <!--Start Back To Top Button-->
+    <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+</div>
+<div class="modal fade" id="applymodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">新权限申请</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body row">
+                <div id="select_window" class="col-12 card-body p-2">
+                    <div class="card-title text-primary text-center" style="padding-top: 0.5rem">
+                        选择申请网络
+                    </div>
+                    <div id="treeview" class="treeview">
+                    </div>
+                </div>
+                <br>
+                <button id="reg_apply" type="button"
+                        class="btn btn-primary shadow-primary btn-block waves-effect waves-light" data-dismiss="modal"
+                        aria-label="Close">申请
+                </button>
+                <!--Start Back To Top Button-->
+                <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+                <!--End Back To Top Button-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="applyingmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body row">
+                <div class="col-12 card-body p-2">
+                    <div class="card-title text-primary text-center" style="padding-top: 0.5rem">
+                        权限申请审批状态
+                    </div>
+                    <div class="table-responsive" style="padding-left: 0px; padding-right:0px">
+                        <table class="table table-bordered" style="font-size: 14px">
+                            <tbody id="applying_table">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                <!--Start Back To Top Button-->
+                <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+                <!--End Back To Top Button-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/plugins/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/plugins/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/plugins/ace/mode-json.js" type="text/javascript" charset="utf-8"></script>
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="assets/plugins/jquery.min.js"></script>
+<script src="assets/plugins/jquery.base64.js"></script>
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap.min.js"></script>
+
+<!--Treeview-->
+<script src="assets/plugins/bootstrap-treeview/js/bootstrap-treeview.min.js"></script>
+<script src="assets/plugins/bootstrap-treeview/js/treeview-custom-script.js"></script>
+<!--Sweet Alerts -->
+<script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+<script src="assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
+
+<!-- simplebar js -->
+<script src="assets/plugins/simplebar/js/simplebar.js"></script>
+<!-- waves effect js -->
+<script src="assets/plugins/waves.js"></script>
+<!-- sidebar-menu js -->
+<script src="assets/plugins/sidebar-menu.js"></script>
+<!-- Custom scripts -->
+<script src="assets/plugins/app-script.js"></script>
+<script src="assets/js/index.js"></script>
+
+
+<script>
+    function use_thead() {
+        thead();
+    }
+
+    function use_changetable_page() {
+        changetable_page();
+    }
+
+    function use_changejson_page() {
+        changejson_page();
+    }
+
+    function use_changequery_table_page() {
+        changequery_table_page();
+    }
+
+    function use_changequery_json_page() {
+        changequery_json_page();
+    }
+
+</script>
+
+</body>
+
+</html>
